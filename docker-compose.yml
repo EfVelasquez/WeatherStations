@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:16
+    container_name: WeatherDatabase
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: weatherDB
+    ports:
+      - "5033:5033"
