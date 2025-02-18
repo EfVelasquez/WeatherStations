@@ -7,4 +7,25 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: weatherDB
     ports:
-      - "5033:5033"
+      - "5432:5432"
+    networks:
+      - weather-net
+
+  app:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: WeatherAPI
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/weatherDB
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pass
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - weather-net
+
+networks:
+  weather-net:
