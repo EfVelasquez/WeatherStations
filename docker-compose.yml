@@ -16,6 +16,7 @@ services:
       context: .
       dockerfile: app/Dockerfile
     container_name: WeatherAPI
+    mem_limit: 256m
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/weatherDB
       SPRING_DATASOURCE_USERNAME: user

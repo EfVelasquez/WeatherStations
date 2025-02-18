@@ -9,14 +9,14 @@ COPY app/src ./src
 RUN mvn -f pom.xml clean package -DskipTests
 
 #
-# Launch
+# Launch stage
 #
 
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk-slim AS launch
 
 WORKDIR /app
 
-COPY app/target/WeatherStations.jar WeatherStations.jar
+COPY --from=build app/target/WeatherStations.jar WeatherStations.jar
 
 EXPOSE 8080
 
