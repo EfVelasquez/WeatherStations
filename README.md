@@ -7,6 +7,8 @@ DB: Postgres
 Made by Ennio Fernando Velásquez Berlingeri. 
 Github Username - EfVelasquez
 19-02-2025
+
+Github Repository: https://github.com/EfVelasquez/WeatherStations
   
 # Description
 WeatherStations is a RESTful API service that registers weather reports. This project offer various ways of retreiving 
@@ -36,4 +38,4 @@ By default, the project will route to localhost:8080.
   
 To open up the Swagger Api Documentation go to http://localhost:8080/swagger-ui/index.html#/ on your browser.  
 There you can play with the endpoints and functionality.  
-The alert system prints the alerts through standard output, so you can see the alerts in the console where you launched the docker   compose, or in Docker Desktop, in the app container's output.  
+The alert system prints the alerts through standard output, so you can see the alerts in the console where you launched the docker   compose, or in Docker Desktop, in the app container's output. 
