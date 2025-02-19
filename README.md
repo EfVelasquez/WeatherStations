@@ -26,7 +26,7 @@ This whole project was setup and packaged in docker, so first of all, you need t
 https://www.docker.com/  
   
 Once you have docker installed, you just need to open a command console and build the docker compose.  
-Locate yourself in the app folder inside the project. And simply call the docker compose:  
+Locate yourself in the main folder inside the project. And simply call the docker compose:  
 Windows CMD example: "docker-compose up"
 (You can also call "docker-compose up --build" to force a recompilation of the images)
 
