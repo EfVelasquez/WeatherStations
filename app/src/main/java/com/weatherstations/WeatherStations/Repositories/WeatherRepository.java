@@ -1,9 +1,11 @@
 package com.WeatherStations.WeatherStations.Repositories;
 import com.WeatherStations.WeatherStations.Repositories.Models.AggregatedReport;
+import com.WeatherStations.WeatherStations.Repositories.Models.AlertReport;
 import com.WeatherStations.WeatherStations.Repositories.Models.StationReport;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.type.descriptor.jdbc.DecimalJdbcType;
 import org.hibernate.type.descriptor.jdbc.TimestampJdbcType;
@@ -42,4 +44,13 @@ public interface WeatherRepository extends JpaRepository<StationReport, Integer>
         @Param("p_station") String p_station,
         @Param("p_start_date") Timestamp p_start_date,
         @Param("p_end_date") Timestamp p_end_date);
+
+
+    @Query(value = "SELECT * FROM  get_alert(:threshold)", nativeQuery = true)
+    List<AlertReport> getAlert(@Param("threshold") BigDecimal threshold);
+
+        /*CREATE OR REPLACE FUNCTION get_missingData()
+        RETURNS TABLE(
+            station VARCHAR) AS $$
+        BEGIN */
 }

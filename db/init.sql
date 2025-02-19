@@ -47,8 +47,6 @@ BEGIN
     ORDER BY report.reception_time DESC
     LIMIT 1;
 END;
-
-
 $$ LANGUAGE plpgsql;
 
 
@@ -89,5 +87,36 @@ BEGIN
         (p_end_date IS NULL OR report.local_time < p_end_date)
     GROUP BY report.station
     LIMIT 1;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_missingData()
+RETURNS TABLE(
+    station VARCHAR) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT DISTINCT report.station
+    FROM report
+    WHERE report.station NOT IN (
+        SELECT report.station
+        FROM report
+        WHERE report.reception_time >= NOW() - INTERVAL '30 seconds'
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_alert(threshold DECIMAL)
+RETURNS TABLE(
+    station VARCHAR,
+    avg_temperature DECIMAL) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT report.station,
+        AVG(report.temperature) AS avg_temperature
+    FROM report
+    WHERE report.local_time >= NOW() - INTERVAL '30 seconds'
+    GROUP BY report.station
+    HAVING AVG(report.temperature) > threshold;
 END;
 $$ LANGUAGE plpgsql;
