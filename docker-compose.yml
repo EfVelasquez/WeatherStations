@@ -10,6 +10,9 @@ services:
       - "5432:5432"
     networks:
       - weather-net
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
 
   app:
     build:
@@ -30,3 +33,6 @@ services:
 
 networks:
   weather-net:
+
+volumes:
+ db_data:
