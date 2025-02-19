@@ -23,19 +23,25 @@ public class TemperatureThresholdJob implements Job{
 
     @Override
     public void execute(JobExecutionContext context){
-        List<TemperatureAlertReport> response = weatherRepository.getTemperatureAlert(new BigDecimal(10));
+
+        String env = System.getenv("ALERT_TEMPERATURE_THRESHOLD");
+
+        if(env!=null){
+
+            List<TemperatureAlertReport> response = weatherRepository.getTemperatureAlert(new BigDecimal(env));
+            
+            if(response.size()>0){
+
+                LocalDateTime now = LocalDateTime.now();
+
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String nowString = now.format(format);
+
+                DecimalFormat temperatureFormat = new DecimalFormat("#.0");
         
-        if(response.size()>0){
-
-            LocalDateTime now = LocalDateTime.now();
-
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String nowString = now.format(format);
-
-            DecimalFormat temperatureFormat = new DecimalFormat("#.0");
-    
-            for (TemperatureAlertReport alertReport : response) {
-                System.out.println(nowString+" ALERT. Station "+alertReport.station+" had a 30-second average of "+temperatureFormat.format(alertReport.avg_temperature) +"ºC");
+                for (TemperatureAlertReport alertReport : response) {
+                    System.out.println(nowString+" ALERT. Station "+alertReport.station+" had a 30-second average of "+temperatureFormat.format(alertReport.avg_temperature) +"ºC");
+                }
             }
         }
         

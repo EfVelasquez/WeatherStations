@@ -14,6 +14,9 @@ RUN mvn -f pom.xml clean package -DskipTests
 
 FROM openjdk:17-jdk-slim AS launch
 
+# Environment variable for alert temperature job
+ENV ALERT_TEMPERATURE_THRESHOLD=38.5
+
 WORKDIR /app
 
 COPY --from=build app/target/WeatherStations.jar WeatherStations.jar
