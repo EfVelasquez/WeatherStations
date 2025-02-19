@@ -7,7 +7,7 @@ import org.quartz.TriggerBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.WeatherStations.WeatherStations.Jobs.AlertJob;
+import com.WeatherStations.WeatherStations.Jobs.MissingAlertJob;
 import com.WeatherStations.WeatherStations.Jobs.TemperatureThresholdJob;
 
 import org.quartz.*;
@@ -15,9 +15,9 @@ import org.quartz.*;
 @Configuration
 public class QuartzConfig {
     @Bean
-    public JobDetail AlertJobDetail() {
-        return JobBuilder.newJob(AlertJob.class)
-                .withIdentity("AlertJob")
+    public JobDetail MissingAlertJobDetail() {
+        return JobBuilder.newJob(MissingAlertJob.class)
+                .withIdentity("MissingAlertJob")
                 .storeDurably()
                 .build();
     }
@@ -37,8 +37,8 @@ public class QuartzConfig {
                 .repeatForever();
 
         return TriggerBuilder.newTrigger()
-                .forJob(AlertJobDetail())
-                .withIdentity("AlertJobDetail")
+                .forJob(MissingAlertJobDetail())
+                .withIdentity("MissingAlertJobDetail")
                 .withSchedule(scheduleBuilder)
                 .build();
     }

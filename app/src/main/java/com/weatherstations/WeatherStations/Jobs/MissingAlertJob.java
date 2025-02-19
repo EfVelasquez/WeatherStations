@@ -1,29 +1,26 @@
 package com.WeatherStations.WeatherStations.Jobs;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.text.DecimalFormat;
-
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.WeatherStations.WeatherStations.Repositories.WeatherRepository;
 import com.WeatherStations.WeatherStations.Repositories.Models.MissingAlertReport;
 import com.WeatherStations.WeatherStations.Repositories.Models.TemperatureAlertReport;
+import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class TemperatureThresholdJob implements Job{
+import com.WeatherStations.WeatherStations.Repositories.WeatherRepository;
+
+public class MissingAlertJob implements Job{
     
-
     @Autowired
     private WeatherRepository weatherRepository;
 
-
     @Override
     public void execute(JobExecutionContext context){
-        List<TemperatureAlertReport> response = weatherRepository.getTemperatureAlert(new BigDecimal(10));
+        List<MissingAlertReport> response = weatherRepository.getMissingAlert();
         
         if(response.size()>0){
 
@@ -31,14 +28,14 @@ public class TemperatureThresholdJob implements Job{
 
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String nowString = now.format(format);
-
-            DecimalFormat temperatureFormat = new DecimalFormat("#.0");
     
-            for (TemperatureAlertReport alertReport : response) {
-                System.out.println(nowString+" ALERT. Station "+alertReport.station+" had a 30-second average of "+temperatureFormat.format(alertReport.avg_temperature) +"ºC");
+            System.out.println(nowString+" ALERT. Missing data from stations:");
+            for (MissingAlertReport alertReport : response) {
+                System.out.println("-"+alertReport.station);
             }
         }
         
+
     }
 
 }

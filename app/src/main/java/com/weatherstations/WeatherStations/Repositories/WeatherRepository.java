@@ -1,6 +1,7 @@
 package com.WeatherStations.WeatherStations.Repositories;
 import com.WeatherStations.WeatherStations.Repositories.Models.AggregatedReport;
-import com.WeatherStations.WeatherStations.Repositories.Models.AlertReport;
+import com.WeatherStations.WeatherStations.Repositories.Models.MissingAlertReport;
+import com.WeatherStations.WeatherStations.Repositories.Models.TemperatureAlertReport;
 import com.WeatherStations.WeatherStations.Repositories.Models.StationReport;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -47,10 +48,9 @@ public interface WeatherRepository extends JpaRepository<StationReport, Integer>
 
 
     @Query(value = "SELECT * FROM  get_alert(:threshold)", nativeQuery = true)
-    List<AlertReport> getAlert(@Param("threshold") BigDecimal threshold);
+    List<TemperatureAlertReport> getTemperatureAlert(@Param("threshold") BigDecimal threshold);
 
-        /*CREATE OR REPLACE FUNCTION get_missingData()
-        RETURNS TABLE(
-            station VARCHAR) AS $$
-        BEGIN */
+    @Query(value = "SELECT * FROM  get_missingData()", nativeQuery = true)
+    List<MissingAlertReport> getMissingAlert();
+
 }

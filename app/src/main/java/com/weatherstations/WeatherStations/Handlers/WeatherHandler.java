@@ -15,6 +15,7 @@ import com.WeatherStations.WeatherStations.Repositories.Models.StationReport;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -41,9 +42,9 @@ public class WeatherHandler {
     public ResponseEntity<Void> PostReport(String stationCode,PostStationReportRequest reportData){
 
         weatherRepository.insertReport(stationCode.toUpperCase(),
-        reportData.local_time != null ? new Timestamp(reportData.local_time.getTime()) : null,
-        reportData.reception_time != null ? new Timestamp(reportData.reception_time.getTime()) : null,
-        reportData.temperature,reportData.humidity,reportData.wind_speed);
+                reportData.local_time != null ? new Timestamp(reportData.local_time.getTime()) : null,
+                new Timestamp(System.currentTimeMillis()),
+                reportData.temperature,reportData.humidity,reportData.wind_speed);
         
         return ResponseEntity.ok().build();
     }

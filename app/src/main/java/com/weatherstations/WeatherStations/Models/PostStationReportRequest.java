@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 
 public class PostStationReportRequest {
     public Date local_time;
-    public Date reception_time;
     public BigDecimal temperature;
     public BigDecimal humidity;
     public BigDecimal wind_speed;
