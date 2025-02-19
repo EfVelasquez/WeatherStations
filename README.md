@@ -16,7 +16,9 @@ stored information, and counts with a small alert system that informs of the cur
 API calls during time.
 This small sample project consists of a Spring Boot API, setup with Swagger and Quartz Jobs, and
 a PostgreSQL database. The whole project is packaged in a Docker compose.
-This project was made in the course of a couple of days, involving research and problem-solving of said technologies.
+This project was made in the course of a couple of days, involving research and problem-solving of said technologies.  
+Weather Stations serves as a demonstration of a containerized structure for an API service and Database with a correct  
+and scalable structure, making use of Stored Procedures, Controllers, Handlers, and Repositories.
 
 # Instructions  
   
